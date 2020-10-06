@@ -216,6 +216,7 @@ export class FoldersPreferencesProvider extends PreferenceProvider {
         const provider = this.folderPreferenceProviderFactory(uri, section, folder);
         this.toDispose.push(provider);
         this.toDispose.push(provider.onDidPreferencesChanged(change => {
+            console.error('9999999999999999999999 ', change);
             this.onDidPreferencesChangedEmitter.fire(change);
         }
         ));

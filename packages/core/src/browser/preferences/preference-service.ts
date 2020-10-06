@@ -125,8 +125,10 @@ export class PreferenceServiceImpl implements PreferenceService {
             for (const scope of PreferenceScope.getScopes()) {
                 const provider = this.providerProvider(scope);
                 this.preferenceProviders.set(scope, provider);
-                this.toDispose.push(provider.onDidPreferencesChanged(changes =>
-                    this.reconcilePreferences(changes)
+                this.toDispose.push(provider.onDidPreferencesChanged(changes => {
+                    console.error('onDidPreferencesChanged ', changes);
+                    this.reconcilePreferences(changes);
+                }
                 ));
                 await provider.ready;
             }
@@ -204,6 +206,7 @@ export class PreferenceServiceImpl implements PreferenceService {
         // emit the changes
         const changedPreferenceNames = Object.keys(changesToEmit);
         if (changedPreferenceNames.length > 0) {
+            console.error('changedPreferenceNames.length > 0 ', changedPreferenceNames);
             this.onPreferencesChangedEmitter.fire(changesToEmit);
         }
         changedPreferenceNames.forEach(preferenceName => this.onPreferenceChangedEmitter.fire(changesToEmit[preferenceName]));

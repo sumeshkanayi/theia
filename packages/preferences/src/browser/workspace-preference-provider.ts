@@ -66,7 +66,11 @@ export class WorkspacePreferenceProvider extends PreferenceProvider {
             if (delegate instanceof WorkspaceFilePreferenceProvider) {
                 this.toDisposeOnEnsureDelegateUpToDate.pushAll([
                     delegate,
-                    delegate.onDidPreferencesChanged(changes => this.onDidPreferencesChangedEmitter.fire(changes))
+                    delegate.onDidPreferencesChanged(changes => {
+                        console.error('888888888888888888888888888 ', changes);
+                        this.onDidPreferencesChangedEmitter.fire(changes);
+                    }
+                    )
                 ]);
             }
         }

@@ -359,11 +359,16 @@ export class CommonFrontendContribution implements FrontendApplicationContributi
             if (e.preferenceName === 'workbench.editor.highlightModifiedTabs') {
                 this.updateStyles();
             } else if (e.preferenceName === 'workbench.colorTheme' || e.preferenceName === 'workbench.iconTheme') {
+                console.error('********** onPreferenceChanged /// ', e.preferenceName);
                 this.updateThemeFromPreference(e.preferenceName);
             }
         });
         this.themeService.onThemeChange(() => this.updateThemePreference('workbench.colorTheme'));
-        this.iconThemes.onDidChangeCurrent(() => this.updateThemePreference('workbench.iconTheme'));
+        this.iconThemes.onDidChangeCurrent(() => {
+            console.error('9999999999999999999999 onDidChangeCurrent 999999999999 ');
+            this.updateThemePreference('workbench.iconTheme');
+        }
+        );
 
         app.shell.leftPanelHandler.addMenu({
             id: 'settings-menu',
@@ -397,11 +402,17 @@ export class CommonFrontendContribution implements FrontendApplicationContributi
     }
 
     protected updateThemePreference(preferenceName: 'workbench.colorTheme' | 'workbench.iconTheme'): void {
+        console.error('2222222222222222222222222 updateThemeFromPreference /// ', preferenceName);
         const inspect = this.preferenceService.inspect<string | null>(preferenceName);
+        console.error('2222 this.iconThemes.current ', this.iconThemes.current);
+        console.error('2222 inspect ', inspect);
         const workspaceValue = inspect && inspect.workspaceValue;
+        console.error('2222 workspaceValue ', workspaceValue);
         const userValue = inspect && inspect.globalValue;
+        console.error('2222 userValue ', userValue);
         const value = workspaceValue || userValue;
         const newValue = preferenceName === 'workbench.colorTheme' ? this.themeService.getCurrentTheme().id : this.iconThemes.current;
+        console.error('2222 newValue ', newValue);
         if (newValue !== value) {
             const scope = workspaceValue !== undefined ? PreferenceScope.Workspace : PreferenceScope.User;
             this.preferenceService.set(preferenceName, newValue, scope);
@@ -409,14 +420,18 @@ export class CommonFrontendContribution implements FrontendApplicationContributi
     }
 
     protected updateThemeFromPreference(preferenceName: 'workbench.colorTheme' | 'workbench.iconTheme'): void {
+        console.error('//////////////////// updateThemeFromPreference /// ', preferenceName);
         const inspect = this.preferenceService.inspect<string | null>(preferenceName);
         const workspaceValue = inspect && inspect.workspaceValue;
         const userValue = inspect && inspect.globalValue;
         const value = workspaceValue || userValue;
+        console.error('//////////////////// updateThemeFromPreference /// value ', value);
         if (value !== undefined) {
             if (preferenceName === 'workbench.colorTheme') {
+                console.error('//////////////////// updateThemeFromPreference /// preferenceName === workbench.colorTheme');
                 this.themeService.setCurrentTheme(value || this.themeService.defaultTheme.id);
             } else {
+                console.error('//////////////////// updateThemeFromPreference /// preferenceName NOT === workbench.colorTheme ', this.iconThemes.default.id);
                 this.iconThemes.current = value || this.iconThemes.default.id;
             }
         }

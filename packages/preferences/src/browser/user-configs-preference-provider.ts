@@ -107,7 +107,10 @@ export class UserConfigsPreferenceProvider extends PreferenceProvider {
     protected createProvider(uri: URI, sectionName: string): UserPreferenceProvider {
         const provider = this.providerFactory(uri, sectionName);
         this.toDispose.push(provider);
-        this.toDispose.push(provider.onDidPreferencesChanged(change => this.onDidPreferencesChangedEmitter.fire(change)));
+        this.toDispose.push(provider.onDidPreferencesChanged(change => {
+            console.error('7777777777777777777777777777 ', change);
+            this.onDidPreferencesChangedEmitter.fire(change);
+        }));
         return provider;
     }
 }

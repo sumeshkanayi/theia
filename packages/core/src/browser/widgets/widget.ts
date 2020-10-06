@@ -74,11 +74,9 @@ export class BaseWidget extends Widget {
     }
 
     protected onBeforeAttach(msg: Message): void {
-        console.error('++++ onBeforeAttach ++++ this.title ', this.title.iconClass);
         if (this.title.iconClass === '') {
             this.title.iconClass = 'no-icon';
         }
-        console.error('++++ onBeforeAttach ++++ this.title === after ', this.title.iconClass);
         super.onBeforeAttach(msg);
     }
 
@@ -95,9 +93,7 @@ export class BaseWidget extends Widget {
     }
 
     protected onAfterAttach(msg: Message): void {
-        console.error('++++ onAfterAttach ++++ this.title ', this.title.iconClass);
         super.onAfterAttach(msg);
-        console.error('++++ onAfterAttach ++++ this.title +++ after ', this.title.iconClass);
         this.update();
         if (this.scrollOptions) {
             (async () => {

@@ -135,6 +135,7 @@ export class IconThemeService {
     }
 
     set current(id: string) {
+        console.error('!!!!!!!!!!!!1 set ', id);
         const newCurrent = this._iconThemes.get(id) || this.default;
         if (this.getCurrent().id !== newCurrent.id) {
             this.setCurrent(newCurrent);
@@ -143,6 +144,8 @@ export class IconThemeService {
 
     protected getCurrent(): IconTheme {
         const id = window.localStorage.getItem('iconTheme');
+        console.log('1111 id ', id);
+        console.log('1111 this.default ', this.default);
         return id && this._iconThemes.get(id) || this.default;
     }
 
