@@ -122,7 +122,12 @@ import {
     CallHierarchyItem,
     CallHierarchyIncomingCall,
     CallHierarchyOutgoingCall,
-    TimelineItem
+    TimelineItem,
+    SemanticTokensLegend,
+    SemanticTokensBuilder,
+    SemanticTokens,
+    SemanticTokensEdits,
+    SemanticTokensEdit
 } from './types-impl';
 import { AuthenticationExtImpl } from './authentication-ext';
 import { SymbolKind } from '../common/plugin-api-rpc-model';
@@ -671,6 +676,14 @@ export function createAPIFactory(
             registerRenameProvider(selector: theia.DocumentSelector, provider: theia.RenameProvider): theia.Disposable {
                 return languagesExt.registerRenameProvider(selector, provider, pluginToPluginInfo(plugin));
             },
+            registerDocumentSemanticTokensProvider(selector: theia.DocumentSelector, provider: theia.DocumentSemanticTokensProvider, legend: theia.SemanticTokensLegend):
+                theia.Disposable {
+                return languagesExt.registerDocumentSemanticTokensProvider(selector, provider, legend, pluginToPluginInfo(plugin));
+            },
+            registerDocumentRangeSemanticTokensProvider(selector: theia.DocumentSelector, provider: theia.DocumentRangeSemanticTokensProvider, legend: theia.SemanticTokensLegend):
+                theia.Disposable {
+                return languagesExt.registerDocumentRangeSemanticTokensProvider(selector, provider, legend, pluginToPluginInfo(plugin));
+            },
             registerCallHierarchyProvider(selector: theia.DocumentSelector, provider: theia.CallHierarchyProvider): theia.Disposable {
                 return languagesExt.registerCallHierarchyProvider(selector, provider);
             }
@@ -913,7 +926,12 @@ export function createAPIFactory(
             CallHierarchyItem,
             CallHierarchyIncomingCall,
             CallHierarchyOutgoingCall,
-            TimelineItem
+            TimelineItem,
+            SemanticTokensLegend,
+            SemanticTokensBuilder,
+            SemanticTokens,
+            SemanticTokensEdits,
+            SemanticTokensEdit
         };
     };
 }
