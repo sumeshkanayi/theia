@@ -129,7 +129,7 @@ export class FileNavigatorModel extends FileTreeModel {
             const isMulti = (stat) ? !stat.isDirectory : false;
             const workspaceNode = isMulti
                 ? this.createMultipleRootNode()
-                : WorkspaceNode.createRoot();
+                : WorkspaceNode.create();
             const roots = await this.workspaceService.roots;
             for (const root of roots) {
                 workspaceNode.children.push(
@@ -152,7 +152,7 @@ export class FileNavigatorModel extends FileTreeModel {
             ? workspace.resource.path.name
             : 'untitled';
         name += ' (Workspace)';
-        return WorkspaceNode.createRoot(name);
+        return WorkspaceNode.create(name);
     }
 
     /**
